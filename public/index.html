@@ -50,44 +50,37 @@
         });
 
         var author = window.prompt('Digite seu usuário');
-        $('#author').append(author);
+        var authorsList = [];
 
-        var socket = io('http://localhost:3000');
-        socket.emit('userConnected', author);
+        if (author.length) {
+            var socket = io('http://localhost:3000');
+            $('#author').append(author);
+            socket.emit('authorConnected', author);
+        };
 
-        function renderMessage(message) {
-            switch (message.author) {
-                case author:
-                $('.messages').append('<div class="myMessage"><span class="hours">'+message.hours+'</span><strong> Você: </strong>'+message.message+'</div>');
+        function renderMessage(message, information, type) {
+            switch (type) {
+                case 'join':
+                    $('.messages').append('<p class="notice">'+information+' conectou-se ao chat</p>');
                     break;
-            
+
                 default:
-                $('.messages').append('<div class="othersMessage"><span class="hours">'+message.hours+'</span><strong> '+message.author+': </strong>'+message.message+'</div>');
+                    switch (message.author) {
+                        case author:
+                            $('.messages').append('<div class="myMessage"><span class="hours">'+message.hours+'</span><strong> Você: </strong>'+message.message+'</div>');
+                            break;
+                    
+                        default:
+                            $('.messages').append('<div class="othersMessage"><span class="hours">'+message.hours+'</span><strong> '+message.author+': </strong>'+message.message+'</div>');
+                            break;
+                    };
                     break;
             };
         };
 
-        function renderUser(user) {
-            $('.messages').append('<p class="notice">'+user+' conectou-se ao chat</p>');
-        };
-
-        function renderUserList(users) {
-            users.forEach(user => {
-                $('#userList').append('<li>'+user+'</li>');
-            });
-        };
-
-        socket.on('updateNewUser', function(user) {
-            renderUser(user);
-        });
-
-        socket.on('updateUserList', function(users) {
-            renderUserList(users);
-        });
-
         socket.on('previousMessages', function(messages) {
             for (message of messages){
-                renderMessage(message);
+                renderMessage(message, null, null);
             };
             scrollToBottom();
         });
@@ -134,6 +127,22 @@
             $('#message').val('');
             scrollToBottom();
         })
+
+        function renderAuthorsList() {
+            authorsList.forEach(author => {
+                $('#userList').append('<li class="userElement">'+author+'</li>');
+            });
+        };
+
+        socket.on('updateNewAuthor', function(author) {
+            renderMessage(null, author, 'join');
+        });
+
+        socket.on('updateAuthorsList', function(authors) {
+            $('#userList').html('');
+            authorsList = authors;
+            renderAuthorsList();
+        });
 
     </script>
     </body>

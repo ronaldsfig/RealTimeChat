@@ -45,6 +45,19 @@ html, body {
     list-style-type: circle;
     padding-bottom: 10px;
   }
+
+  .userElement {
+    transition-duration: 0.2s;
+    animation: fadeIn linear 0.4s;
+    
+  }
+
+  .userElement:hover {
+    font-size: larger;
+    transition-duration: 0.2s;
+    color: #069;
+    cursor: pointer;
+  }
   
   .titlebox { 
     color: lightslategray;
@@ -105,9 +118,11 @@ html, body {
     margin-left:40px;
     border-radius:5px;
     word-wrap: break-word;
+
+    animation: fadeIn linear 0.4s;
   }
 
-  .myMessage:after{
+  .myMessage::after{
     content:"";
     position:absolute;
     width:0px;
@@ -128,7 +143,10 @@ html, body {
     margin-right:40px;
     border-radius:5px;
     word-wrap: break-word;
+
+    animation: fadeIn linear 0.4s;
   }
+
   .othersMessage:before{
     content:"";
     position:absolute;
@@ -144,4 +162,9 @@ html, body {
     float: right;
     margin-right: 10px;
     color: lightslategray;
+  }
+
+  @keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
   }

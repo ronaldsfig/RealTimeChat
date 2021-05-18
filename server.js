@@ -37,7 +37,7 @@ const Post = sequelize.define('messages', {
     }
 });
 
-let users = [];
+let authors = [];
 let messages = [];
 
 io.on('connection', socket => {
@@ -45,12 +45,14 @@ io.on('connection', socket => {
 
     socket.emit('previousMessages', messages);
 
-    socket.on('userConnected', data =>{
+    socket.on('authorConnected', data =>{
         socket.username = data;
-        users.push(data);
-        console.log(users);
-        socket.broadcast.emit('updateNewUser', data);
-        socket.broadcast.emit('updateUserList', users);
+        authors.push(data);
+
+        socket.emit('updateNewAuthor', data);
+        socket.broadcast.emit('updateNewAuthor', data);
+        socket.emit('updateAuthorsList', authors);
+        socket.broadcast.emit('updateAuthorsList', authors);
     });
     
     socket.on('sendMessage', data =>{
