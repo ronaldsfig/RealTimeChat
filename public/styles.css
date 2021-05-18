@@ -41,21 +41,31 @@ html, body {
   }
 
   .userList {
-    padding-top: 10px;
-    list-style-type: circle;
+    padding-left: 0;
     padding-bottom: 10px;
   }
 
   .userElement {
+    list-style: none;
+    border-top: 1px solid rgb(245, 245, 245);
+    padding: 5px 10px;
+
     transition-duration: 0.2s;
     animation: fadeIn linear 0.4s;
-    
+  }
+
+  .onCircle {
+    height: 10px;
+    width: 10px;
+    margin-top: 10px;
+    background-color: rgba(0, 153, 77, 0.5);
+    border-radius: 50%;
+    float: right;
   }
 
   .userElement:hover {
     font-size: larger;
     transition-duration: 0.2s;
-    color: #069;
     cursor: pointer;
   }
   
@@ -77,7 +87,7 @@ html, body {
     width: 527px;
     border: 1px solid #ddd;
     height: 50px;
-    padding: 10px 20px;
+    padding: 8px 16px;
     font-size: 14px;
   }
   
@@ -106,6 +116,8 @@ html, body {
   .notice {
     font-size: 12px;
     color: lightslategray;
+
+    animation: fadeIn linear 0.4s;
   }
 
   .myMessage {
